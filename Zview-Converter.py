@@ -27,6 +27,24 @@ import time
 import pandas as pd
 import openpyxl  #importante fazer pip install openpyxl disso
 
+print('')
+print(' **************************************************************************************************************')
+print(' ')
+print('                                           REGISTRO DO PROGRAMA')
+print('')
+print('   NOME: Zview-Converter.py')
+print('   AUTHOR: Leo Sousa Santiago de Oliveira')
+print('   VERSION: 0.1.0')
+print('   LINGUAGEM: Python3')
+print('   Editor: VSCode')
+print('   PURPOSE: Converter arquivos de medidas de um impedancímetro para visualizar no Zview')
+print('   E-mail: leoxsousa2@gmail.com')
+print('   GitHub: https://github.com/leoxsousa2')
+print('')
+print(' **************************************************************************************************************')
+print(' ')
+print(' ')
+time.sleep(5)
 os.system('cls' if os.name == 'nt' else 'clear')                    # limpa a tela do terminal
 
 print("    ")
