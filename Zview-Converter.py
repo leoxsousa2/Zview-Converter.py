@@ -1,7 +1,7 @@
 import importlib
 import subprocess
 # Atualiza o pip
-subprocess.run(['pip', 'install', '--upgrade', 'pip'])
+#subprocess.run(['pip', 'install', '--upgrade', 'pip'])
 # lista de bibliotecas que serão verificadas e instaladas caso necessário
 bibliotecas = ['importlib', 'subprocess', 'os', 'time', 'pandas', 'openpyxl']
 # percorre a lista de bibliotecas
@@ -34,7 +34,7 @@ print('                                           REGISTRO DO PROGRAMA')
 print('')
 print('   NOME: Zview-Converter.py')
 print('   AUTHOR: Leo Sousa Santiago de Oliveira')
-print('   VERSION: 0.1.0')
+print('   VERSION: 0.1.1')
 print('   LINGUAGEM: Python3')
 print('   Editor: VSCode')
 print('   PURPOSE: Converter arquivos de medidas de um impedancímetro para visualizar no Zview')
@@ -92,24 +92,24 @@ def renomear_pasta():
     novoNome = os.path.abspath(os.path.dirname(__file__)) + "\\" + listar_arquivos_sem_extensao() + "\\" + listar_arquivos_sem_extensao() + " Original"
     os.rename(nomeAntigo, novoNome)
     print("    ")
-    print("Criado a pasta Original")
+    print("Criando a pasta Original")
     print("    ")
 
 def criar_pastas():
     pasta1 = os.path.abspath(os.path.dirname(__file__)) + "\\" + listar_arquivos_sem_extensao() + "\\" + listar_arquivos_sem_extensao() + " Virgula"
     print("    ")
-    print("Criado a pasta Virgula")
+    print("Criando a pasta Virgula")
     print("    ")
     pasta2 = os.path.abspath(os.path.dirname(__file__)) + "\\" + listar_arquivos_sem_extensao() + "\\" + listar_arquivos_sem_extensao() + " Zview"
     print("    ")
-    print("Criado a pasta Zview")
+    print("Criando a pasta Zview")
     print("    ")
     os.makedirs(pasta1)
     os.makedirs(pasta2)
 
 def fazer_copia_da_pasta():
     print("    ")
-    print('Fazendo cópia da pasta Original para  a pasta Vírgula')
+    print('Fazendo cópia da pasta Original para a pasta Vírgula')
     print("    ")
     time.sleep(1)
     caminho_origem = os.path.abspath(os.path.dirname(__file__)) + "\\" + listar_arquivos_sem_extensao() + "\\" + listar_arquivos_sem_extensao() + " Original"
@@ -127,16 +127,16 @@ def fazer_copia_da_pasta():
     print("Pasta descompactada")
     print("    ")
     print("    ")
-    print("Criado a pasta Original")
+    print("Criando a pasta Original")
     print("    ")
     print("    ")
-    print("Criado a pasta Virgula")
+    print("Criando a pasta Virgula")
     print("    ")
     print("    ")
-    print("Criado a pasta Zview")
+    print("Criando a pasta Zview")
     print("    ")
     print("    ")
-    print('Feito cópia da pasta Original para  a pasta Vírgula')
+    print('Feito cópia da pasta Original para a pasta Vírgula')
     print("    ")
 
 def substituir_ponto_por_virgula_em_txt():
@@ -179,7 +179,7 @@ def converter_txt_to_excel():
 
 def fazendo_ajustes_nos_arquivosEXCEL_pastaVirgula():
     print("    ")
-    print("Copiando terceira coluna para a sétima - trocando sinal - na pasta Vírgula")
+    print("Copiando terceira coluna para a sétima na pasta Vírgula")
     print("    ")
     pasta_origem = os.path.abspath(os.path.dirname(__file__)) + "\\" + listar_arquivos_sem_extensao() + "\\" + listar_arquivos_sem_extensao() + " Virgula"
     pasta_destino = os.path.abspath(os.path.dirname(__file__)) + "\\" + listar_arquivos_sem_extensao() + "\\" + listar_arquivos_sem_extensao() + " Virgula"
@@ -204,7 +204,7 @@ def fazendo_ajustes_nos_arquivosEXCEL_pastaVirgula():
                 
 def fazendo_ajustes_nos_arquivosEXCEL_pastaZview():
     print("    ")
-    print("Copiando terceira coluna para a sétima - trocando sinal - excluindo colunas 3, 4, 5, 6 e 7 na pasta Zview")
+    print("Copiando terceira coluna para a sétima - trocando sinal - Trocando (,) por (.) - excluindo colunas 3, 4, 5 e 6 na pasta Zview")
     print("    ")
     pasta_origem = os.path.abspath(os.path.dirname(__file__)) + "\\" + listar_arquivos_sem_extensao() + "\\" + listar_arquivos_sem_extensao() + " Zview"
     pasta_destino = os.path.abspath(os.path.dirname(__file__)) + "\\" + listar_arquivos_sem_extensao() + "\\" + listar_arquivos_sem_extensao() + " Zview"
@@ -214,6 +214,8 @@ def fazendo_ajustes_nos_arquivosEXCEL_pastaZview():
             caminho_excel = os.path.join(pasta_origem, arquivo_excel)
             # Lê o arquivo Excel usando pandas
             df = pd.read_excel(caminho_excel)
+            # Substitui ponto por vírgula em todas as colunas do DataFrame
+            df = df.map(lambda x: str(x).replace(',', '.'))
             # Copia a terceira coluna para a sétima coluna
             if len(df.columns) >= 3:
                 df.insert(6, 'Z" (Ω)', df.iloc[:, 2])
@@ -243,7 +245,7 @@ def excluindo_primeira_linha_excel_pastaZview():
         # Salva o DataFrame modificado de volta no arquivo Excel
         df.to_excel(caminho_completo, index=False)
     print("    ")
-    print("Excluindo a primeira linha dos arquivos Excel")
+    print("Excluindo a primeira linha dos arquivos Excel na pasta Zview")
     print("    ")
 
 def converterExcel_para_TXT_e_excluirExcel():
@@ -256,8 +258,6 @@ def converterExcel_para_TXT_e_excluirExcel():
         caminho_completo_excel = os.path.join(caminho_da_pasta, arquivo)
         # Carrega o arquivo Excel em um DataFrame
         df = pd.read_excel(caminho_completo_excel)
-        # Substitui ponto por vírgula em todas as colunas do DataFrame
-        df = df.map(lambda x: str(x).replace(',', '.'))
         # Gera o caminho para o arquivo de texto
         caminho_completo_txt = os.path.join(caminho_da_pasta, f"{os.path.splitext(arquivo)[0]}.txt")
         # Salva o DataFrame como arquivo de texto (tab-separated)
@@ -266,7 +266,7 @@ def converterExcel_para_TXT_e_excluirExcel():
         os.remove(caminho_completo_excel)
 
     print("    ")
-    print("Convertendo para TXT e trocando ponto por vírgula na pasta Zview")
+    print("Convertendo para TXT e excluindo os arquivos Excel na pasta Zview")
     print("    ")
 
 
@@ -296,6 +296,7 @@ fazendo_ajustes_nos_arquivosEXCEL_pastaVirgula()
 
 time.sleep(1)
 fazendo_ajustes_nos_arquivosEXCEL_pastaZview()
+
 
 time.sleep(1)
 excluindo_primeira_linha_excel_pastaZview()
